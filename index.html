@@ -1,19 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-  </body>
 
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
-  </script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport">
+    <title>request</title>
+</head>
+<script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="screen.css" type="text/css" media="screen, projection">
+<link href="index2.css" rel="stylesheet">
+<script>
+//渲染进程
+//其中create-folder是事件名，1111是传给主进程的数据
+var  ipcRenderer  = require('electron').ipcRenderer;
+ipcRenderer.send('create-folder', '1111');
+ 
+//渲染进程发送完事件后需要监听住进程回的事件
+ipcRenderer.on('create-folder-result', function(event, data) {
+  console.log(data);//222
+});
+ 
+
+
+
+$(document).ready(function() {
+    var xmlhttp;
+
+    function loadXMLDoc(url) {
+        xmlhttp = null;
+        if (window.XMLHttpRequest) { // code for all new browsers
+            xmlhttp = new XMLHttpRequest();
+        }
+        if (xmlhttp != null) {
+            xmlhttp.onreadystatechange = state_Change;
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send(null);
+        } else {
+            alert("Your browser does not support XMLHTTP.");
+        }
+    }
+
+    function state_Change() {
+        if (xmlhttp.readyState == 4) { // 4 = "loaded"
+            if (xmlhttp.status == 200) { // 200 = OK
+                $("#json_input").val(xmlhttp.responseText)
+            } else {
+                alert("Problem retrieving XML data");
+            }
+        }
+    }
+    var url = 'http://192.168.0.96/debugapps/abcd.css';
+    loadXMLDoc(url)
+
+
+    $("#btn2").click(function() {
+        var str = $("#json_input").val()
+        var data1 = str.split("\n");
+        for (var i = 0; i < data1.length; i++) {
+            var value = data1[i];
+            value = $.trim(value);
+            console.log("对象的值为：%d %d %s", i, value.length, value);
+        }
+        data = $.grep(data1, function(val, key) {
+            if ($.trim(val).length > 1) {
+                return val;
+            }
+        }, false);
+        var data1array = data[1].split(" ").join('').split('\'');
+        var method = data1array[0];
+        var urlstart = data1array[1];
+        urlstart = urlstart.split(':').join('').split('\'').join('');
+        $("#test1").text(method);
+        $("#test2").text(urlstart);
+        $("#test3").text(data[data.length - 1]);
+    });
+});
+</script>
+
+<body>
+    <p>Input field:
+        <textarea id="json_input" name="json_input" class="json_input" style="font-size: 11px !important; resize: both; width: 1078px; max-width: 1070px;" rows="32" spellcheck="false" placeholder="请输入需要检验的json字符串或URL">
+        </textarea>
+    </p>
+    <p id="test1">sign result</p>
+    <p id="test2">sign result</p>
+    <p id="test3">sign result</p>
+    <button id="btn2">设置值2</button>
+</body>
+
 </html>

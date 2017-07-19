@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" media="all" href="http://lvioscode.com/assets/application-4e27b22391bb1664b7648ab62c8d19e71c6f9cb87a0592b3e93adb4dea7fc5f4.css" />
+<link rel="stylesheet" media="print" href="http://lvioscode.com/assets/print-68eed6d8135d858318821e790e25da27b2b4b9b8dbb1993fa6765d8e2e3e16ee.css" />
+<!-- <script src="http://lvioscode.com/assets/application-08b6574c3555caacac9489e7086631598f038e89bf45f0d8b2cfa5343371108b.js"></script>
+ -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+</head>
+
+<body>
+    <div class="login-box" style="padding:25px; width: 400px; ">
+        <div class="login-heading">
+            <h3>Sign in</h3>
+        </div>
+        <div class="login-body">
+            <form class="new_user" id="new_user" action="/users/sign_in" accept-charset="UTF-8" method="post">
+                <input name="utf8" type="hidden" value="✓">
+                <input type="hidden" name="authenticity_token" value="F4beIte1dTn2YG3xZpznTyBo4BIpK3lhUGBCGo/ZpR3HlI0Bheh2OpgkawrRwjaVet6/pqm2w0g0KtLlON1dxw==">
+                <input class="form-control top" placeholder="Username or Email" autofocus="autofocus" autocapitalize="off" autocorrect="off" type="text" name="user[login]" id="user_login">
+                <input class="form-control bottom" placeholder="Password" type="password" name="user[password]" id="user_password">
+                <div class="remember-me checkbox">
+                    <label for="user_remember_me">
+                        <input name="user[remember_me]" type="hidden" value="0">
+                        <input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="/users/password/new">Forgot your password?</a>
+                </div>
+        </div>
+        <div>
+            <input type="submit" name="commit" value="Sign in" class="btn btn-save">
+        </div>
+        </form>
+    </div>
+    </div>
+</body>
+<script>
+// You can also require other files to run in this process
+require('./renderer.js')
+</script>
+
+</html>

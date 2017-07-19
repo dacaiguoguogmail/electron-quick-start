@@ -23,7 +23,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -56,5 +56,14 @@ app.on('activate', function () {
   }
 })
 
+
+//主进程
+const { ipcMain} = require('electron');//es6结构赋值写法
+//主进程监听事件
+ipcMain.on('create-folder', function(event, data) {
+    
+  console.log(data);//1111
+  event.sender.send('create-folder-result','222');//主进程干完活后告诉渲染进程
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
