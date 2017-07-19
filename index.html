@@ -12,20 +12,22 @@
 <link rel="stylesheet" href="screen.css" type="text/css" media="screen, projection">
 <link href="index2.css" rel="stylesheet">
 <script>
-//渲染进程
-//其中create-folder是事件名，1111是传给主进程的数据
-var  ipcRenderer  = require('electron').ipcRenderer;
-ipcRenderer.send('create-folder', '1111');
- 
-//渲染进程发送完事件后需要监听住进程回的事件
-ipcRenderer.on('create-folder-result', function(event, data) {
-  console.log(data);//222
-});
- 
-
-
-
 $(document).ready(function() {
+
+    var ipcRenderer = require('electron').ipcRenderer;
+    ipcRenderer.on('create-folder-result', function(event, data) {
+        console.log(data); //222
+    });
+
+    $("#tongxun").click(function() {
+        //渲染进程
+        //其中create-folder是事件名，1111是传给主进程的数据
+        ipcRenderer.send('create-folder', '1111');
+
+        //渲染进程发送完事件后需要监听住进程回的事件
+
+    });
+
     var xmlhttp;
 
     function loadXMLDoc(url) {
@@ -88,6 +90,7 @@ $(document).ready(function() {
     <p id="test2">sign result</p>
     <p id="test3">sign result</p>
     <button id="btn2">设置值2</button>
+    <button id="tongxun">设置值2</button>
 </body>
 
 </html>
